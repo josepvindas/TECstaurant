@@ -1,0 +1,11 @@
+{
+  "name": "catalog-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "service.js",
+  "scripts": {
+    "start": "npm service.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
