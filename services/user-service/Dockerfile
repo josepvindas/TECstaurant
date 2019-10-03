@@ -7,4 +7,4 @@ WORKDIR /usr/src/service/
 
 COPY . .
 
-CMD ["sudo ./service.rb"]
+CMD ["./service.rb"]

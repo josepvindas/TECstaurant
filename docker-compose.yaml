@@ -8,14 +8,6 @@ services:
     networks:
       - tecstaurant_net
 
-  user-service:
-    build: ./services/user-service
-    command: ./service.rb
-    ports:
-      - '4008:4008'
-    networks:
-      - tecstaurant_net
-
   neo4j:
     image: neo4j:3.5
     ports:
