@@ -30,6 +30,8 @@ based on recent purchases and what other people who purchased the same product, 
 
 Simple SQL database using [MySQL](https://www.mysql.com/).
 
+![alt-text](https://i.imgur.com/vyTFZyj.png)
+
 ## Services
 
 ### catalog-service
