@@ -4,9 +4,9 @@
 
 Backend infrastructure application run in a kubernetes cluster. The project components are as follows:
 
-- [API Gateway](##API-Gateway)
-- [Services](##Services)
-- [Databases](##Databases)
+- [API Gateway](#API-Gateway)
+- [Services](#Services)
+- [Databases](#Databases)
 
 ![alt-text](https://i.imgur.com/mdNVM4V.png)
 
