@@ -1,5 +1,3 @@
 /services/catalog-service/node_modules
 /services/catalog-service/package-lock.json
-
-/scripts/tests/node_modules
-/scripts/tests/package-lock.json
+/services/catalog-service/src/config.js

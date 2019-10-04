@@ -1,13 +1,5 @@
 version: '3.4'
 services:
-  catalog-service:
-    build: ./services/catalog-service
-    command: node service
-    ports:
-      - '4007:4007'
-    networks:
-      - tecstaurant_net
-
   neo4j:
     image: neo4j:3.5
     ports:
