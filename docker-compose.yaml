@@ -7,6 +7,14 @@ services:
       - '7688:7687'
     networks:
       - tecstaurant_net
+  report_service:
+    build: ./services/report-service
+    volumes:
+      - ./services/report-service:/usr/src/service
+    ports:
+      - '5000:80'
+    networks:
+      - tecstaurant_net
 networks:
   tecstaurant_net:
     driver: bridge

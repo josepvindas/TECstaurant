@@ -33,17 +33,16 @@ cypher = (query, params, cb) => {
 };
 
 router.get('/', (req, res) => {
-  var query = 'MATCH (n:Product) RETURN n';
-  var params = { limit: 10 };
+  var query = 'MATCH (n:Location) RETURN n';
   cb = (err, data) => {
     console.log(JSON.stringify(data));
     var resultArray = [];
     for (var i = 0; i < data.results[0].data.length; i++) {
-      resultArray.push({ Product: data.results[0].data[i].row[0] });
+      resultArray.push({ Location: data.results[0].data[i].row[0] });
     }
     res.send({ result: resultArray });
   };
-  cypher(query, params, cb);
+  cypher(query, null, cb);
 });
 
 module.exports = router;
