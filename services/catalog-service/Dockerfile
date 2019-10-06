@@ -9,4 +9,4 @@ COPY . .
 # Make port 4007 available for interaction
 EXPOSE 4000
 # run the application, with command 'node service.js'
-CMD ["node","service"]
+CMD ["node","src/service.js"]

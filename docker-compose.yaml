@@ -7,6 +7,14 @@ services:
       - '7688:7687'
     networks:
       - tecstaurant_net
+  catalog_service:
+    build: ./services/catalog-service
+    volumes:
+      - ./services/catalog-service:/usr/src/service
+    ports:
+      - '4001:4000'
+    networks:
+      - tecstaurant_net
   report_service:
     build: ./services/report-service
     volumes:
