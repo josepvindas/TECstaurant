@@ -38,9 +38,9 @@ router.get('/', (req, res) => {
   cb = (err, data) => {
     var resultArray = [];
     for (var i = 0; i < data.results[0].data.length; i++) {
-      resultArray.push({ Product: data.results[0].data[i].row[0] });
+      resultArray.push(data.results[0].data[i].row[0]);
     }
-    res.send({ result: resultArray });
+    res.send({ products: resultArray });
   };
   cypher(query, null, cb);
 });
@@ -51,7 +51,7 @@ router.get('/:id', (req, res) => {
     'MATCH (n:Product) WHERE n.id = ' + req.params.id.toString() + ' RETURN n';
   cb = (err, data) => {
     try {
-      res.send({ status: 'Success', product: data.results[0].data[0].row[0] });
+      res.send(data.results[0].data[0].row[0]);
     } catch (error) {
       res.send({ status: 'Failed', message: error.message });
     }

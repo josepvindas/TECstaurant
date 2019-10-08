@@ -12,9 +12,9 @@ app = Flask(__name__)
 api = Api(app)
 
 # Create Neo4j Driver
-driver = GraphDatabase.driver("bolt://neo4j:7687", auth=("neo4j", "123456"))
-session = driver.session()
-q1="MATCH (l:Location) RETURN l.name"
+#driver = GraphDatabase.driver("bolt://neo4j:7687", auth=("neo4j", "123456"))
+#session = driver.session()
+#q1="MATCH (l:Location) RETURN l.name"
 
 # Handle root request
 @app.route("/")
@@ -30,11 +30,8 @@ def index():
 # Create RestAPI resources
 class LocationList(Resource):
   def get(self):
-    data = session.run(q1)
-    records = []
-    for record in data: 
-      records.append({"location":record["l.name"]})
-    return {'message':'Success', 'data':jsonify(records)}
+    data = 'session.run(q1)'
+    return {'message':'Success', 'data':data}
 
 # Append resources to API
 api.add_resource(LocationList, '/locations')
