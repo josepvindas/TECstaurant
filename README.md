@@ -362,7 +362,7 @@ Request Body:
 {
   "id": "id",
   "name": "name",
-  "hourly_fee": fee
+  "hourly_fee": "hourly_fee"
 }
 ```
 
@@ -393,7 +393,7 @@ Response:
     {
       "id": "id",
       "name": "name",
-      "hourly_fee": fee
+      "hourly_fee": "hourly_fee"
     }
   ]
 }
@@ -410,7 +410,7 @@ Response:
 {
   "id": "id",
   "name": "name",
-  "hourly_fee": fee
+  "hourly_fee": "hourly_fee"
 }
 ```
 
