@@ -1,3 +1,7 @@
+CREATE CONSTRAINT ON (l:Location) ASSERT l.id IS UNIQUE
+CREATE CONSTRAINT ON (p:Product) ASSERT p.id IS UNIQUE
+CREATE CONSTRAINT ON (s:Service) ASSERT s.id IS UNIQUE
+
 CREATE (Alajuela:Location{ id: 1, name: 'TECstaurant - Alajuela', address:'Center of Alajuela' })
 CREATE (Cartago:Location{ id: 2,  name: 'TECstaurant - Cartago', address:'Center of Cartago' })
 CREATE (Guanacaste:Location{ id: 3,  name: 'TECstaurant - Guanacaste', address:'Center of Guanacaste' })
@@ -24,6 +28,11 @@ CREATE (p12:Product { id: 12, name:'Medium Pizza', price:'$10', description:'Piz
 CREATE (p13:Product { id: 13, name:'Large Pizza', price:'$15', description:'Pizza of choice, 12 slices' })
 CREATE (p14:Product { id: 14, name:'Extra-Large Pizza', price:'$25', description:'Pizza of choice, 16 slices' })
 CREATE (p15:Product { id: 15, name:'Monster Pizza', price:'$35', description:'Pizza of choice, 25 slices' })
+
+CREATE (s01:Service { id: 1, name:'Birthday Party', hourly_fee: 100, description: 'Large, private room with capacity for 50 people + service' })
+CREATE (s02:Service { id: 2, name:'Children Party', hourly_fee: 50, description: 'Large, private room with capacity for 50 people + service + cake' })
+CREATE (s03:Service { id: 3, name:'Anniversary', hourly_fee: 20, description: 'Small, private room + service' })
+CREATE (s04:Service { id: 4, name:'Private event', hourly_fee: 250, description: 'Private access to the entire premises of the location + service' })
 
 CREATE
   (Alajuela)-[:SELLS]->(p01),
@@ -193,4 +202,66 @@ CREATE
   (TresRios)-[:SELLS]->(p12),
   (TresRios)-[:SELLS]->(p13),
   (TresRios)-[:SELLS]->(p14),
-  (TresRios)-[:SELLS]->(p15);
+  (TresRios)-[:SELLS]->(p15)
+
+  CREATE
+  (Alajuela)-[:OFFERS]->(s01),
+  (Alajuela)-[:OFFERS]->(s02),
+  (Alajuela)-[:OFFERS]->(s03),
+  (Alajuela)-[:OFFERS]->(s04)
+
+  CREATE
+  (Cartago)-[:OFFERS]->(s01),
+  (Cartago)-[:OFFERS]->(s02),
+  (Cartago)-[:OFFERS]->(s03),
+  (Cartago)-[:OFFERS]->(s04)
+
+  CREATE
+  (Guanacaste)-[:OFFERS]->(s01),
+  (Guanacaste)-[:OFFERS]->(s02),
+  (Guanacaste)-[:OFFERS]->(s03),
+  (Guanacaste)-[:OFFERS]->(s04)
+
+  CREATE
+  (Heredia)-[:OFFERS]->(s01),
+  (Heredia)-[:OFFERS]->(s02),
+  (Heredia)-[:OFFERS]->(s03),
+  (Heredia)-[:OFFERS]->(s04)
+
+  CREATE
+  (Limon)-[:OFFERS]->(s01),
+  (Limon)-[:OFFERS]->(s02),
+  (Limon)-[:OFFERS]->(s03),
+  (Limon)-[:OFFERS]->(s04)
+
+  CREATE
+  (Puntarenas)-[:OFFERS]->(s01),
+  (Puntarenas)-[:OFFERS]->(s02),
+  (Puntarenas)-[:OFFERS]->(s03),
+  (Puntarenas)-[:OFFERS]->(s04)
+
+  CREATE
+  (SanJose)-[:OFFERS]->(s01),
+  (SanJose)-[:OFFERS]->(s02),
+  (SanJose)-[:OFFERS]->(s03),
+  (SanJose)-[:OFFERS]->(s04)
+
+  CREATE
+  (Escazu)-[:OFFERS]->(s01),
+  (Escazu)-[:OFFERS]->(s02),
+  (Escazu)-[:OFFERS]->(s03),
+  (Escazu)-[:OFFERS]->(s04)
+
+  CREATE
+  (Lindora)-[:OFFERS]->(s01),
+  (Lindora)-[:OFFERS]->(s02),
+  (Lindora)-[:OFFERS]->(s03),
+  (Lindora)-[:OFFERS]->(s04)
+
+  CREATE
+  (TresRios)-[:OFFERS]->(s01),
+  (TresRios)-[:OFFERS]->(s02),
+  (TresRios)-[:OFFERS]->(s03),
+  (TresRios)-[:OFFERS]->(s04)
+
+  

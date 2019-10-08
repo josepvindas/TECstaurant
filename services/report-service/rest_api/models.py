@@ -3,7 +3,7 @@ from py2neo import Graph
 import os
 
 # Create connection
-graph = Graph('http://localhost:7474/db/data/transaction/commit', username='username', password='password')
+graph = Graph('http://neo4j:7474/db/data', username='neo4j', password='123456')
 
 class Location:
   def __init__(self, report_type):
