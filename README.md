@@ -12,24 +12,7 @@ The project is structured in accordance to this model:
 
 ![alt-text](https://i.imgur.com/mdNVM4V.png)
 
-## Installation
-
-### Pre-requisites
-
-Since this solution is containerized, the only packages that need to be installed in the host machine before being able to run the project are the [docker](https://www.docker.com/) base image, and the [docker-compose](https://docs.docker.com/compose/) service.
-
-### Running the solution
-
-```bash
-git clone https://github.com/josepvindas/TECstaurant.git
-cd /Tecstaurant
-docker-compose build
-docker-compose up
-```
-
-That's it. All other packages will be installed in the containers themselves, so they don't need to be installed in the host.
-
-> **Important:** all of the micro-services run inside a private internal network, this means that the host can only communicate with the [API Gateway](#API-Gateway), and all other services are not publicly accessible.
+## Usage
 
 ## API Gateway
 
