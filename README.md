@@ -50,6 +50,8 @@ Collection of micro-services that compose the backend logic and functionality.
 
 It is a micro-service written in [Node.js](https://nodejs.org/en/). This micro-service manages the cataloging aspects of TECstaurant. It works in conjunction with the [Neo4j Database](#Neo4j) to provide the CRUD functions for all the different data types that compose the catalog.
 
+The docker image for this service is available [here](https://hub.docker.com/r/tecstaurant/catalog-service).
+
 - [Locations](#Location)
 - [Products](#Product)
 - [Services](#Service)
