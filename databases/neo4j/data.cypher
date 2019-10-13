@@ -262,6 +262,6 @@ CREATE
   (TresRios)-[:OFFERS]->(s01),
   (TresRios)-[:OFFERS]->(s02),
   (TresRios)-[:OFFERS]->(s03),
-  (TresRios)-[:OFFERS]->(s04)
+  (TresRios)-[:OFFERS]->(s04);
 
   

@@ -1,6 +1,4 @@
-# TECstaurant
-
-## About
+<img src="https://i.imgur.com/eXRi5Am.png" width="450" height="100">
 
 Backend infrastructure application run in a [kubernetes](https://kubernetes.io/) cluster. The project components are as follows:
 
@@ -10,9 +8,7 @@ Backend infrastructure application run in a [kubernetes](https://kubernetes.io/)
 
 The project is structured in accordance to this model:
 
-![alt-text](https://i.imgur.com/mdNVM4V.png)
-
-## Usage
+![alt-text](https://imgur.com/Ml1RCZI.png)
 
 ## API Gateway
 
