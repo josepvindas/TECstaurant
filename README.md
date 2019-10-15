@@ -12,6 +12,10 @@ The project is structured in accordance to this model:
 
 ## API Gateway
 
+![alt-text](https://img.shields.io/badge/Nginx-1.17.4-green?logo=nginx)
+
+Simple [Nginx Server](https://nginx.org/) that works as an Ingress into the cluster. All of the requests will be mapped from the API Gateway's path into the corresponding service that can handle them.
+
 ## Databases
 
 There are two database solutions that work together to store and manage the data of this solution:
@@ -43,6 +47,8 @@ Collection of micro-services that compose the backend logic and functionality.
 - [user-service](#user-service)
 
 ### catalog-service
+
+![alt-text](https://img.shields.io/badge/Node.js-10.16.3-green?logo=node.js)
 
 It is a micro-service written in [Node.js](https://nodejs.org/en/). This micro-service manages the cataloging aspects of TECstaurant. It works in conjunction with the [Neo4j Database](#Neo4j) to provide the CRUD functions for all the different data types that compose the catalog.
 
@@ -445,6 +451,12 @@ Status:
 
 ### order-service
 
+![alt-text](https://img.shields.io/badge/Go-1.12.7-lightblue?logo=Go) ![alt-text](https://img.shields.io/badge/GraphQL-14.5.8-ff69b4?logo=graphql)
+
 ### report-service
 
+![alt-text](https://img.shields.io/badge/Python-3.7.4-yellow?logo=python)
+
 ### user-service
+
+![alt-text](https://img.shields.io/badge/Ruby-2.6.4-red?logo=ruby) ![alt-text](https://img.shields.io/badge/GraphQL-14.5.8-ff69b4?logo=graphql)
