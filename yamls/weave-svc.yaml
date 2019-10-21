@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: weave-svc
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: weave-svc
+subsets:
+  - addresses:
+      - ip: <weave-svc IP>
+    ports:
+      - port: 80
