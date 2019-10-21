@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-rsc
+  annotations:
+    nginx.org/websocket-services: 'weave-svc'
+spec:
+  rules:
+    - host: admin.tecstaurant.com
+      http:
+        paths:
+          - backend:
+              serviceName: weave-svc
+              servicePort: 80
