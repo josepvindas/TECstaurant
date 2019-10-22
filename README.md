@@ -122,8 +122,11 @@ lxc list haproxy # Print overview of the haproxy machine
 From the overview, copy the IP address of the load balancer, and then add the following at the end of your `etc/hosts` file.
 
 ```bash
-<load balancer IP>    admin.tecstaurant.com
-<load balancer IP>    tecstaurant.com
+<load balancer IP>    dashboard.tecstaurant.com
+<load balancer IP>    catalog.tecstaurant.com
+<load balancer IP>    users.tecstaurant.com
+<load balancer IP>    reports.tecstaurant.com
+<load balancer IP>    orders.tecstaurant.com
 ```
 
 ## Databases
@@ -460,7 +463,8 @@ Request Body:
 {
   "id": "id",
   "name": "name",
-  "hourly_fee": "hourly_fee"
+  "hourly_fee": "hourly_fee",
+  "description": "description"
 }
 ```
 
