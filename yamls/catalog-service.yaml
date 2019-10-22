@@ -11,7 +11,7 @@ spec:
         app: catalog
     spec:
       containers:
-        - image: tecstaurant/catalog-service:initial
+        - image: tecstaurant/catalog-service:latest
           name: catalog
           ports:
             - containerPort: 4000
@@ -24,7 +24,7 @@ spec:
   selector:
     app: catalog
   ports:
-    - name: 'API'
+    - name: 'http'
       port: 4000
       targetPort: 4000
 ---
