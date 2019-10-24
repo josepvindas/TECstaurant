@@ -1,40 +1,40 @@
 USE services;
 
-CREATE TABLE clients(
-    clientId INT AUTO_INCREMENT PRIMARY KEY,
-    clientName VARCHAR(100) NOT NULL,
-    clientLastName VARCHAR(100) NOT NULL,
-    clientEmail VARCHAR(100) NOT NULL,
-    clientUserName VARCHAR(100) NOT NULL,
-    clientPassword VARCHAR(100) NOT NULL
+CREATE TABLE usertypes(
+    usertypeid INT AUTO_INCREMENT PRIMARY KEY,
+    typename VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE owners(
-    ownerId INT AUTO_INCREMENT PRIMARY KEY,
-    ownerName VARCHAR(100) NOT NULL,
-    ownerLastName VARCHAR(100) NOT NULL,
-    ownerEmail VARCHAR(100) NOT NULL,
-    ownerUserName VARCHAR(100) NOT NULL,
-    ownerPassword VARCHAR(100) NOT NULL
+CREATE TABLE users(
+    userid INT AUTO_INCREMENT PRIMARY KEY,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    password_digest VARCHAR(100) NOT NULL,
+    usertypeid INT NOT NULL,
+    CONSTRAINT fk_usertype
+    FOREIGN KEY (usertypeid)
+        REFERENCES usertypes(usertypeid)
 );
 
 CREATE TABLE products(
-    productId INT AUTO_INCREMENT PRIMARY KEY,
-    productName VARCHAR(100) NOT NULL,
-    productDescription VARCHAR(100) NOT NULL,
-    productImageURL VARCHAR(100) NOT NULL,
-    productPrice DECIMAL NOT NULL
+    productid INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(100) NOT NULL,
+    imageurl VARCHAR(100) NOT NULL,
+    price DECIMAL NOT NULL
 );
 
 CREATE TABLE restaurants(
-    restaurantId INT AUTO_INCREMENT PRIMARY KEY,
-    restaurantName VARCHAR(100) NOT NULL,
-    restaurantDescription VARCHAR(100) NOT NULL,
-    restaurantTags VARCHAR(100) NOT NULL,
-    ownerId INT NOT NULL,
+    restaurantid INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(100) NOT NULL,
+    tags VARCHAR(100) NOT NULL,
+    ownerid INT NOT NULL,
     CONSTRAINT fk_owner
-    FOREIGN KEY (ownerId)
-        REFERENCES owners(ownerId)
+    FOREIGN KEY (ownerid)
+        REFERENCES users(userid)
 );
 
 CREATE TABLE locations(
@@ -53,10 +53,10 @@ CREATE TABLE orders(
     orderDate VARCHAR(100) NOT NULL,
     orderTotalPrice DECIMAL NOT NULL,
     orderRating DECIMAL NOT NULL,
-    clientId INT NOT NULL,
+    clientid INT NOT NULL,
     CONSTRAINT fk_client
-    FOREIGN KEY (clientId)
-        REFERENCES clients(clientId),
+    FOREIGN KEY (clientid)
+        REFERENCES users(userid),
     locationId INT NOT NULL,
     CONSTRAINT fk_location
     FOREIGN KEY (locationId)
@@ -76,17 +76,17 @@ CREATE TABLE orderXproduct(
         REFERENCES products(productId)
 );
 
-INSERT INTO clients(clientName, clientLastName, clientEmail, clientUserName, clientPassword) 
-    VALUES ('Jaun', 'Poti', 'sup@bro.com', 'pojun', '123');
+INSERT INTO usertypes(typename)
+    VALUES ('Client'),('Owner'),('Admin');
 
-INSERT INTO owners(ownerName, ownerLastName, ownerEmail, ownerUserName, ownerPassword) 
-    VALUES ('Riam', 'Totso', 'jk@ngga.com', 'ritot', '456');
+INSERT INTO users(firstname, lastname, email, username, password_digest, usertypeid) 
+    VALUES ('Jaun', 'Poti', 'sup@bro.com', 'pojun', '$2a$12$G3Kypeg5tziitUEdrlUIPOqtanu8wffqCDCPE/uv39RYChQGsRvae', 1) , ('Riam', 'Totso', 'jk@ngga.com', 'ritot', '$2a$12$D47xrhvd9x9zpcX/YnS/oemoscY..gwhpUqLzRdZCJ7573ZLE2FVq', 2);
 
 INSERT INTO products(productName, productDescription, productImageURL, productPrice)
     VALUES ('Brownie', 'Astroboy Gold', 'https://imgur.com/BBRPp7b', 5000.00);
 
-INSERT INTO restaurants(restaurantName, restaurantDescription, restaurantTags, ownerId) 
-    VALUES ('Spork', 'I&I', '#DownBabylon', 1);
+INSERT INTO restaurants(name, description, tags, ownerid) 
+    VALUES ('Spork', 'I&I', '#DownBabylon', 2);
 
 INSERT INTO locations(locationName, locationAddress, locationRating, restaurantId) 
     VALUES ('By Sauron', 'Mordor',  9.5, 1);

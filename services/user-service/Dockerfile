@@ -1,10 +1,20 @@
-# Run from Ruby Version 2.5
-FROM ruby:2.5
-# throw errors if Gemfile has been modified since Gemfile.lock
-RUN bundle config --global frozen 1
+FROM ruby:2.6.2-stretch
 
-WORKDIR /usr/src/service/
+# Copy application code
+COPY . /application
+# Change to the application's directory
+WORKDIR /application
 
-COPY . .
+RUN gem update bundler
 
-CMD ["./service.rb"]
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+    && apt install -y nodejs
+
+# Install gems
+RUN bundle install
+
+RUN bundle exec rails db:migrate
+
+EXPOSE 3000
+
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
