@@ -10,15 +10,23 @@ spec:
       labels:
         app: neo4j
     spec:
+      nodeName: kworker2
+      volumes:
+        - name: neo4j-data
+          persistentVolumeClaim:
+            claimName: neo4j-claim
       containers:
         - image: neo4j:3.5
           env:
             - name: NEO4J_AUTH
-              value: "neo4j/tecstaurantneodbadmin01"
+              value: 'neo4j/tecstaurantneodbadmin01'
           name: neo4j
           ports:
             - containerPort: 7474
             - containerPort: 7687
+          volumeMounts:
+            - name: neo4j-data
+              mountPath: /var/lib/neo4j/data
 ---
 apiVersion: v1
 kind: Service
@@ -35,3 +43,4 @@ spec:
       port: 7687
       targetPort: 7687
 ---
+
