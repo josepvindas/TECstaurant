@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: mysql-rc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      nodeName: kworker2
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-claim
+      containers:
+        - image: tecstaurant/mysql:latest
+          name: mysql
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-svc
+spec:
+  selector:
+    app: mysql
+  ports:
+    - name: 'browser'
+      port: 3306
+      targetPort: 3306
+---
+
