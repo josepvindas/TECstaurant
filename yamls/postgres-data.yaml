@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-volume
+  name: postgres-volume
   labels:
     type: local
 spec:
@@ -12,12 +12,12 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: '/mysql'
+    path: '/postgres'
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-claim
+  name: postgres-claim
 spec:
   storageClassName: manual
   accessModes:

@@ -134,7 +134,7 @@ From the overview, copy the IP address of the load balancer, and then add the fo
 There are two database solutions that work together to store and manage the data of this solution:
 
 - [Neo4j](#Neo4j)
-- [MySQl](#MySQL)
+- [PostgreSQL](#PostgreSQL)
 
 ### Neo4j
 
@@ -144,9 +144,9 @@ based on recent purchases and what other people who purchased the same product, 
 
 ![alt-text](https://imgur.com/PA2xsKU.png)
 
-### MySQL
+### PostgreSQL
 
-Simple SQL database using [MySQL](https://www.mysql.com/).
+Simple SQL database using [PostgreSQL](https://www.postgresql.org/).
 
 ![alt-text](https://i.imgur.com/vyTFZyj.png)
 
