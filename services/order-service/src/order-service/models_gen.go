@@ -2,6 +2,10 @@
 
 package order_service
 
+type EraseOrder struct {
+	Orderid int `json:"orderid"`
+}
+
 type NewOrder struct {
 	Date       string        `json:"date"`
 	Rating     float64       `json:"rating"`

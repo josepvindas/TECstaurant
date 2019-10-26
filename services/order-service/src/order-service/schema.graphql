@@ -45,6 +45,11 @@ input NewProduct {
   details: String!
 }
 
+input EraseOrder{
+  orderid: Int!
+}
+
 type Mutation {
   createOrder(input: NewOrder!): Order!
+  deleteOrder(input: EraseOrder!): Order!
 }

@@ -9,10 +9,10 @@ import (
 )
 
 const (
-	host     = "127.0.0.3"
+	host     = "postgres-svc"
 	port     = 5432
 	user     = "root"
-	password = "123"
+	password = "admin123"
 	dbname   = "services"
 )
 
@@ -79,6 +79,55 @@ func (r *mutationResolver) CreateOrder(ctx context.Context, input NewOrder) (*Or
 		TotalPrice: input.TotalPrice,
 		ClientId:   input.ClientID,
 		LocationId: input.LocationID,
+	}
+
+	return order, nil
+}
+
+func (r *mutationResolver) DeleteOrder(ctx context.Context, input EraseOrder) (*Order, error) {
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	// Open doesn't open a connection. Validate DSN data:
+	err = db.Ping()
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	deleteProduct := `DELETE FROM orderXproduct WHERE orderid = $1;`
+	_, err = db.Exec(deleteProduct, input.Orderid)
+	if err != nil {
+		panic(err)
+	}
+
+	deleteOrder := `DELETE FROM orders WHERE orderid = $1 RETURNING orderid, date, totalprice, rating, clientid, locationid;`
+	var orderid int
+	var date string
+	var totalprice float64
+	var rating float64
+	var clientid int
+	var locationid int
+
+	err = db.QueryRow(deleteOrder, input.Orderid).Scan(&orderid, &date, &totalprice, &rating, &clientid, &locationid)
+	if err != nil {
+		panic(err)
+	}
+
+	order := &Order{
+		ID:         orderid,
+		Date:       date,
+		Rating:     rating,
+		TotalPrice: totalprice,
+		ClientId:   clientid,
+		LocationId: locationid,
 	}
 
 	return order, nil
