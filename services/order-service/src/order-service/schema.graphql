@@ -5,28 +5,26 @@
 type Order {
   id: ID!
   date: String!
-  rating: Float
+  rating: Float!
   totalPrice: Float!
+  client: Client!
+  location: Location!
+  products: [Product!]!
 }
 
 type Location {
   id: ID!
-  name: String!
-  address: String!
-  rating: Float
 }
 
 type Client {
   id: ID!
   username: String!
+  email: String!
 }
 
 type Product {
   id: ID!
-  name: String!
-  description: String
-  price: Float!
-  imageURL: String
+  details: String!
 }
 
 type Query {
@@ -35,8 +33,16 @@ type Query {
 
 input NewOrder {
   date: String!
-  rating: Float
+  rating: Float!
   totalPrice: Float!
+  clientId: Int!
+  locationId: Int!
+  products: [NewProduct!]! 
+}
+
+input NewProduct {
+  productId: Int!
+  details: String!
 }
 
 type Mutation {

@@ -13,7 +13,7 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
 # Install gems
 RUN bundle install
 
-RUN bundle exec rails db:migrate
+CMD ["bundle", "exec", "rails", "db:migrate"]
 
 EXPOSE 3000
 

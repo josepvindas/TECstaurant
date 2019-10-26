@@ -3,7 +3,15 @@
 package order_service
 
 type NewOrder struct {
-	Date       string   `json:"date"`
-	Rating     *float64 `json:"rating"`
-	TotalPrice float64  `json:"totalPrice"`
+	Date       string        `json:"date"`
+	Rating     float64       `json:"rating"`
+	TotalPrice float64       `json:"totalPrice"`
+	ClientID   int           `json:"clientId"`
+	LocationID int           `json:"locationId"`
+	Products   []*NewProduct `json:"products"`
+}
+
+type NewProduct struct {
+	ProductID int    `json:"productId"`
+	Details   string `json:"details"`
 }
