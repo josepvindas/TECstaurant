@@ -22,3 +22,10 @@ spec:
             backend:
               serviceName: catalog-svc
               servicePort: 4000
+    - host: users.tecstaurant.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: user-svc
+              servicePort: 3000

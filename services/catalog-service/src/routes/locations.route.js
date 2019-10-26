@@ -75,6 +75,22 @@ router.get('/:id/menu', (req, res) => {
   cypher(query, null, cb);
 });
 
+// Get location's availability
+router.get('/:id/availability', (req, res) => {
+  var query =
+    'MATCH (p:Reservation), (l:Location) WHERE l.id = ' +
+    req.params.id +
+    ' AND (l)-[:HAS]->(p) RETURN p';
+  cb = (err, data) => {
+    var resultArray = [];
+    for (var i = 0; i < data.results[0].data.length; i++) {
+      resultArray.push(data.results[0].data[i].row[0]);
+    }
+    res.send({ menu: resultArray });
+  };
+  cypher(query, null, cb);
+});
+
 // Get location's service list
 router.get('/:id/services', (req, res) => {
   var query =

@@ -6,8 +6,8 @@ metadata:
   labels:
     app: postgres
 data:
-  POSTGRES_DB: postgresdb
-  POSTGRES_USER: postgresadmin
+  POSTGRES_DB: services
+  POSTGRES_USER: root
   POSTGRES_PASSWORD: admin123
 ---
 apiVersion: extensions/v1beta1
@@ -24,7 +24,7 @@ spec:
       nodeName: kworker2
       containers:
         - name: postgres
-          image: postgres:10.4
+          image: tecstaurant/postgres:latest
           imagePullPolicy: 'Always'
           ports:
             - containerPort: 5432

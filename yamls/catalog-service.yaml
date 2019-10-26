@@ -17,12 +17,13 @@ spec:
     spec:
       containers:
         - image: tecstaurant/catalog-service:latest
+          imagePullPolicy: 'Always'
           name: catalog
           resources:
             limits:
-              cpu: "100m"
+              cpu: '100m'
             requests:
-              cpu: "100m"
+              cpu: '100m'
           ports:
             - containerPort: 4000
 ---

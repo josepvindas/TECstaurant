@@ -16,7 +16,8 @@ spec:
         app: users
     spec:
       containers:
-        - image: gosaenz/usersrailserver:latest
+        - image: tecstaurant/user-service:latest
+          imagePullPolicy: 'Always'
           name: users
           resources:
             limits:
