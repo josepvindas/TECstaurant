@@ -41,9 +41,10 @@ router.post('/:id', (req, res) => {
     reservation.id +
     ", date:'" +
     reservation.date +
-    ", user_id:'" +
+    "', user_id:" +
     reservation.user_id +
-    "' })";
+    ' })';
+  console.log(query);
   cb = (err, data) => {
     if (err != null) {
       res.send({ status: 'Failed', error: err });

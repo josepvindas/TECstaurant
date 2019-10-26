@@ -1,6 +1,6 @@
 CREATE CONSTRAINT ON (l:Location) ASSERT l.id IS UNIQUE
 CREATE CONSTRAINT ON (p:Product) ASSERT p.id IS UNIQUE
-CREATE CONSTRAINT ON (s:Service) ASSERT s.id IS UNIQUE
+
 
 CREATE (Alajuela:Location{ id: 1, name: 'TECstaurant - Alajuela', address:'Center of Alajuela' })
 CREATE (Cartago:Location{ id: 2,  name: 'TECstaurant - Cartago', address:'Center of Cartago' })

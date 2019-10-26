@@ -29,3 +29,10 @@ spec:
             backend:
               serviceName: user-svc
               servicePort: 3000
+    - host: orders.tecstaurant.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: order-svc
+              servicePort: 8080

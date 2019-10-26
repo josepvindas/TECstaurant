@@ -86,7 +86,7 @@ router.get('/:id/availability', (req, res) => {
     for (var i = 0; i < data.results[0].data.length; i++) {
       resultArray.push(data.results[0].data[i].row[0]);
     }
-    res.send({ menu: resultArray });
+    res.send({ taken_dates: resultArray });
   };
   cypher(query, null, cb);
 });

@@ -106,12 +106,14 @@ kubectl expose deploy nginx-deploy-main --port 80 # Create a service for the pod
 
 Once the services are running and the pods have been created, we need to define an Ingress resource file to handle all incoming requests. For this, we will use two hostnames.
 
-- admin.tecstaurant.com: For cluster visualization.
-- tecstaurant.com: For access to all services from the client.
+- dashboard.tecstaurant.com: For cluster visualization.
+- catalog.tecstaurant.com: For the catalog service.
+- users.tecstaurant.com: For the user service.
+- orders.tecstaurant.com: For the order service.
 
 The ingress resource file can be found under the yamls directory within the repository.
 
-### 4. Handling hostnames
+### 4. Handling host names
 
 The easiest solution for making sure that the requests are reaching the cluster from the desired hostname, is to edit the `etc/hosts` file within the computer that will handle the client.
 
@@ -125,7 +127,6 @@ From the overview, copy the IP address of the load balancer, and then add the fo
 <load balancer IP>    dashboard.tecstaurant.com
 <load balancer IP>    catalog.tecstaurant.com
 <load balancer IP>    users.tecstaurant.com
-<load balancer IP>    reports.tecstaurant.com
 <load balancer IP>    orders.tecstaurant.com
 ```
 
@@ -142,13 +143,13 @@ Simple graph database using [Neo4j](https://neo4j.com/). This database is tasked
 as well as the products they sell, and the services they offer. Furthermore, the database also offers suggestions on what products to buy,
 based on recent purchases and what other people who purchased the same product, have also acquired.
 
-![alt-text](https://imgur.com/PA2xsKU.png)
+![alt-text](https://imgur.com/qa1IOMT.png)
 
 ### PostgreSQL
 
 Simple SQL database using [PostgreSQL](https://www.postgresql.org/).
 
-![alt-text](https://i.imgur.com/vyTFZyj.png)
+![alt-text](https://imgur.com/NOIGDXl.png)
 
 ## Services
 
@@ -171,6 +172,7 @@ The docker image for this service is available [here](https://hub.docker.com/r/t
 - [Locations](#Location)
 - [Products](#Product)
 - [Services](#Service)
+- [Reservations](#Reservation)
 
 #### Location
 
@@ -277,6 +279,26 @@ Response:
       "name": "name",
       "hourly_fee": "hourly_fee",
       "description": "description"
+    }
+  ]
+}
+```
+
+##### Get Location's availability
+
+Route: `/locations/:id/availability`
+Request Type: `GET`
+
+Response:
+
+```json
+{
+  "taken_dates": [
+    {
+      "id": "id",
+      "name": "name",
+      "date": "dd/MM/YYYY-HH:mm",
+      "user_id": "user_id"
     }
   ]
 }
@@ -564,6 +586,88 @@ Status:
 - Success: Data deleted successfully.
 - Failed: Couldn't delete data.
 
+#### Reservation
+
+##### Add a new Reservation
+
+Route: `/reservations/:id`
+Request Type: `POST`
+
+Request Params:
+
+- **id:** Id of the location the reservation is being added to.
+
+Request Body:
+
+```json
+{
+  "id": "id",
+  "date": "date",
+  "user_id": "user_id"
+}
+```
+
+Response:
+
+```json
+{
+  "status": "status",
+  "message": "message"
+}
+```
+
+Status:
+
+- Success: The data has been successfully added.
+- Failed: There was a problem while adding the data.
+
+##### Update a Reservation
+
+Route: `/reservations/:id`
+Request Type: `PUT`
+
+Request Body:
+
+```json
+{
+  "date": "date",
+  "user_id": "user_id"
+}
+```
+
+Response:
+
+```json
+{
+  "status": "status",
+  "message": "message"
+}
+```
+
+Status:
+
+- Success: The data has been successfully modified.
+- Failed: There was a problem while modifying the data.
+
+##### Remove a Reservation
+
+Route: `/reservations/:id`
+Request Type: `DELETE`
+
+Response:
+
+```json
+{
+  "status": "status",
+  "message": "message"
+}
+```
+
+Status:
+
+- Success: Data deleted successfully.
+- Failed: Couldn't delete data.
+
 ### dashboard-service
 
 The dashboard is a simple tool that provides a live visualization solution for the processes, resources, etc, that run within the cluster. We will use [Weave Scope](https://weave.works/oos/scope).
@@ -588,10 +692,301 @@ kubectl apply -f weave-svc.yaml
 
 ![alt-text](https://img.shields.io/badge/Go-1.12.7-lightblue?logo=Go) ![alt-text](https://img.shields.io/badge/GqlGen-0.10.1-ff69b4?logo=graphql)
 
+Micro-service written in [golang](https://golang.org/), in charge of managing the orders in the platform.
+
+#### Order Service Queries
+
+##### Get all orders
+
+query:
+
+```graphql
+{
+  orders {
+    id
+    date
+    rating
+    totalPrice
+    client {
+      id
+      username
+      email
+    }
+    location {
+      id
+    }
+    products {
+      id
+      details
+    }
+  }
+}
+```
+
+response:
+
+```graphql
+{
+  "data": {
+    "orders": [
+      {
+        "id": "id",
+        "date": "dd/MM/YYYY",
+        "rating": rating,
+        "totalPrice": price,
+        "client": {
+          "id": "client_id",
+          "username": "client_username",
+          "email": "client_email"
+        },
+        "location": {
+          "id": "location_id"
+        },
+        "products": [
+          {
+            "id": "product_id",
+            "details": "special_details"
+          },
+          ...
+        ]
+      }
+    ]
+  }
+}
+```
+
+##### Add new order
+
+query:
+
+```graphql
+mutation createOrder{
+  createOrder(input:{
+    date: "dd/MM/YYYY",
+    rating: rating,
+    totalPrice: price,
+    clientId: clientId,
+    locationId: locationId,
+    products: [{productId: id, details: "details"},...]
+  }
+  ){
+    id
+    date
+    rating
+  }
+}
+```
+
+response:
+
+```graphql
+{
+  "data" : {
+    "id":"id",
+    "date":"date",
+    "rating":"rating"
+  }
+}
+```
+
+##### Delete an order
+
+query:
+
+```graphql
+mutation deleteOrder {
+  deleteOrder(input: { orderid: id }) {
+    rating
+  }
+}
+```
+
+response:
+
+```graphql
+{
+  "data": {
+    "rating":"rating"
+  }
+}
+```
+
 ### report-service
 
-![alt-text](https://img.shields.io/badge/Python-3.7.4-yellow?logo=python)
+![alt-text](https://img.shields.io/badge/Python-3.7.4-yellow?logo=python) ![alt-text](https://img.shields.io/badge/Status:-Incomplete-red)
+
+![alt-text](https://imgur.com/nAaxr4Y.png)
 
 ### user-service
 
-![alt-text](https://img.shields.io/badge/Ruby-2.6.4-red?logo=ruby) ![alt-text](https://img.shields.io/badge/GraphQL-14.5.8-ff69b4?logo=graphql)
+![alt-text](https://img.shields.io/badge/Ruby-2.6.4-red?logo=ruby) ![alt-text](https://img.shields.io/badge/graphql-1.8.3-ff69b4?logo=graphql)
+
+It is a micro-service written in [Ruby](https://www.ruby-lang.org/en/), that is in charge of managing the users of the platform. The micro-service accomplishes this by communicating with the PostgreSQL data base, and using [GraphQL](https://graphql.org/) to handle the queries.
+
+#### User Service Queries
+
+##### get all users
+
+query:
+
+```graphql
+{
+  allUsers {
+    firstname
+    lastname
+    email
+    username
+  }
+}
+```
+
+response:
+
+```graphql
+{
+  "data": {
+    "allUsers":
+    [
+      {
+        "firstname": "first_name",
+        "lastname": "last_name",
+        "email": "example@mail.com",
+        "username": "username"
+      },
+      ...
+    ]
+}
+```
+
+##### Create new user
+
+query:
+
+```graphql
+mutation {
+  createUser(
+    firstname: "first_name"
+    lastname: "last_name"
+    email: "example@mail.com"
+    usertypeid: id
+    authProvider: { username: { username: "username", password: "password" } }
+  ) {
+    firstname
+    lastname
+    email
+    username
+  }
+}
+```
+
+response:
+
+```graphql
+{
+  "data":
+    {
+      "firstname": "first_name",
+      "lastname": "last_name",
+      "email": "example@mail.com",
+      "username": "username"
+    }
+}
+```
+
+##### Sign-In user
+
+query:
+
+```graphql
+mutation {
+  signinUser(username: { username: "username", password: "password" }) {
+    token
+    user {
+      id
+      email
+    }
+  }
+}
+```
+
+response:
+
+```graphql
+{
+  "data": {
+    "signinUser": {
+      "token": "token",
+      "user": {
+        "id": "id",
+        "email": "email"
+      }
+    }
+  }
+}
+```
+
+##### Update user data
+
+query:
+
+```graphql
+mutation {
+  updateUser(
+    id: id
+    firstname: "firstname"
+    lastname: "lastname"
+    email: "example@mail.com"
+    username: "username"
+  ) {
+    firstname
+    lastname
+    email
+    username
+  }
+}
+```
+
+response:
+
+```graphql
+{
+  "data": {
+    "updateUser": {
+      "firstname": "firstname",
+      "lastname": "lastname",
+      "email": "example@mail.com",
+      "username": "username"
+    }
+  }
+}
+```
+
+##### Delete an user
+
+query:
+
+```graphql
+mutation {
+  deleteUser(id: id) {
+    firstname
+    lastname
+    username
+    email
+  }
+}
+```
+
+response:
+
+```graphql
+{
+  "data": {
+    "deleteUser": {
+      "firstname": "firstname",
+      "lastname": "lastname",
+      "username": "username",
+      "email": "example@mail.com"
+    }
+  }
+}
+```
